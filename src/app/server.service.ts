@@ -20,6 +20,16 @@ export class ServerService {
   getServers(){
     //convert json to object
     return this.http.get(this.url)
-      .pipe(map(res => res.json()))
+      .pipe(
+        map(
+          (res :Response) => {
+            const data = res.json();
+            for (const server of data) {
+              server.name = 'FETCHED_'+server.name;
+            }
+            return data;
+          }
+        )
+      );
   }
 }
