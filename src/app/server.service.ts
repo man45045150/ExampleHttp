@@ -1,6 +1,7 @@
 import { Http, Headers, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class ServerService {
   }
   getServers(){
     //convert json to object
-    return this.http.get(this.url)
+    return this.http.get(this.url+'/error')
       .pipe(
         map(
           (res :Response) => {
@@ -29,7 +30,10 @@ export class ServerService {
             }
             return data;
           }
-        )
+        ),
+        catchError(error=>{
+          return throwError('Something went wrong');
+        })
       );
   }
 }
