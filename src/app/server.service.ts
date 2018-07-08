@@ -5,12 +5,15 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ServerService {
-
+  private url = 'https://udemy-ng-http-94332.firebaseio.com/data.json';
   constructor(private http:Http) { }
   storeServers(servers:any[]){
     const headers = new Headers({'Content-Type':'application/json'});
-    return this.http.post('https://udemy-ng-http-94332.firebaseio.com/data.json',
+    return this.http.post(this.url,
     servers,
     {headers: headers });
+  }
+  getServers(){
+    return this.http.get(this.url);
   }
 }
