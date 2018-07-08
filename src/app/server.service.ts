@@ -1,5 +1,6 @@
-import { Http,Headers } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,8 @@ export class ServerService {
       {headers: headers });
   }
   getServers(){
-    return this.http.get(this.url);
+    //convert json to object
+    return this.http.get(this.url)
+      .pipe(map(res => res.json()))
   }
 }
